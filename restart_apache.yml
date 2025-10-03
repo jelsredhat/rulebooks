@@ -1,0 +1,9 @@
+---
+- name: Restart Apache service
+  hosts: webservers # Or specific host defined by event data
+  become: yes
+  tasks:
+    - name: Ensure Apache is restarted
+      ansible.builtin.service:
+        name: httpd # or apache2 depending on your OS
+        state: restarted
