@@ -1,0 +1,22 @@
+---
+- name: Apache Monitoring and Remediation
+  hosts: localhost # Or a specific inventory group for Apache servers
+  sources:
+    - ansible.eda.url_check:
+        url: "http://node1/index.html"
+        delay: 5 # Check every 5 seconds
+        timeout: 3 # Timeout for the URL check
+  rules:
+    - name: Restart Apache if down
+      condition: event.status == "down"
+      action:
+        run_playbook:
+          name: restart_apache.yml # Playbook to restart Apache
+          # Optional: pass variables to the playbook
+          # vars:
+          #   apache_service_name: httpd 
+    - name: Log successful Apache status
+      condition: event.status == "up"
+      action:
+        debug:
+          msg: "Apache server is up and running."
