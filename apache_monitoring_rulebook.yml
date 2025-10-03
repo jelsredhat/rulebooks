@@ -1,0 +1,14 @@
+---
+- name: Apache Monitoring and Remediation
+  hosts: all # Rulebook runs locally, but actions target remote hosts
+  sources:
+    - ansible.eda.generic: # Example generic event source, replace with your actual event source
+        port: 5000 # Port to listen for events
+  rules:
+    - name: Restart Apache on 'apache_down' event
+      condition: event.payload.status == "apache_down"
+      action:
+        run_playbook:
+          name: restart_apache.yml # Path to the playbook
+          extra_vars:
+            target_host: "{{ event.payload.hostname }}" # Pass hostname from event if needed
