@@ -1,4 +1,3 @@
----
 - name: Restart Apache service
   hosts: webservers # Or specific host defined by event data
   become: yes
