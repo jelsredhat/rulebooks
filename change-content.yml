@@ -1,0 +1,11 @@
+ #Change Content
+- name: Change content 
+  hosts: all
+  become: yes
+  become_user: root
+  tasks:
+    - name: copy content
+      replace:
+       path: /var/www/html/index.html
+       regexp: "HELLO WORLD"
+       replace: "hello world"
